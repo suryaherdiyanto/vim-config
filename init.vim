@@ -6,6 +6,7 @@
 :set smarttab
 :set softtabstop=4
 :set mouse=a
+:set splitbelow
 
 
 call plug#begin()
@@ -37,6 +38,8 @@ let g:NERDTreeDirArrowExpandable="+"
 let g:NERDTreeDirArrowCollapsible="~"
 let g:user_emmet_mode='a'
 let g:NERDTreeIgnore = ['^build$','^node_modules$', '^vendor$']
+let g:python3_host_prog = '/opt/homebrew/bin/python3'
+let g:python_host_prog = '/Users/suryaherdiyanto/.pyenv/shims/python'
 
 " Use tab for trigger completion with characters ahead and navigate
 " NOTE: There's always complete item selected by default, you may want to enable

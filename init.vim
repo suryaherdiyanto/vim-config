@@ -15,14 +15,13 @@ Plug 'preservim/nerdtree'
 Plug 'http://github.com/tpope/vim-surround'
 Plug 'https://github.com/ryanoasis/vim-devicons'
 Plug 'https://github.com/tc50cal/vim-terminal'
-Plug 'https://github.com/ap/vim-css-color'
-Plug 'https://github.com/rafi/awesome-vim-colorschemes'
 Plug 'https://github.com/terryma/vim-multiple-cursors'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mattn/emmet-vim'
+Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 call plug#end()
 
-:colorscheme jellybeans
+colorscheme catppuccin
 
 nnoremap <C-f> :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>

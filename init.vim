@@ -7,7 +7,15 @@
 :set softtabstop=4
 :set mouse=a
 :set splitbelow
+:set splitright
 
+inoremap " ""<left>
+inoremap ' ''<left>
+inoremap ( ()<left>
+inoremap [ []<left>
+inoremap { {}<left>
+inoremap {<CR> {<CR>}<ESC>O
+inoremap {;<CR> {<CR>};<ESC>O
 
 call plug#begin()
 Plug 'vim-airline/vim-airline'
@@ -19,6 +27,9 @@ Plug 'https://github.com/terryma/vim-multiple-cursors'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'mattn/emmet-vim'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'windwp/nvim-autopairs'
+Plug 'junegunn/fzf.vim'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 call plug#end()
 
 colorscheme catppuccin
@@ -26,6 +37,9 @@ colorscheme catppuccin
 nnoremap <C-f> :NERDTreeFocus<CR>
 nnoremap <C-n> :NERDTree<CR>
 nnoremap <C-t> :NERDTreeToggle<CR>
+nnoremap <silent> <C-p> :GFiles<CR>
+nnoremap <silent> <Leader>/ :BLines<CR>
+nnoremap <C-Tab> :tabnext
 
 " Exit Vim if NERDTree is the only window remaining in the only tab.
 autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif

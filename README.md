@@ -1,7 +1,7 @@
 #INSTALLATION
 <hr>
-  Make `init.vim` file on ~/.config/nvim folder
+Make `init.vim` file on ~/.config/nvim folder
 ```
-  mkdir ~/.config/nvim && touch ~/.config/nvim/init.vim
+mkdir ~/.config/nvim && touch ~/.config/nvim/init.vim
 ```
-  Paste all code there.
+Paste all code there.

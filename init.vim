@@ -32,7 +32,7 @@ Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
 Plug 'windwp/nvim-autopairs'
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'https://github.com/digitaltoad/vim-pug.git
+Plug 'https://github.com/digitaltoad/vim-pug.git'
 call plug#end()
 
 colorscheme catppuccin

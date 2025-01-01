@@ -21,7 +21,8 @@ inoremap {;<CR> {<CR>};<ESC>O
 
 call plug#begin()
 Plug 'vim-airline/vim-airline'
-Plug 'preservim/nerdtree'
+Plug 'nvim-tree/nvim-web-devicons' " optional
+Plug 'nvim-tree/nvim-tree.lua'
 Plug 'http://github.com/tpope/vim-surround'
 Plug 'https://github.com/ryanoasis/vim-devicons'
 Plug 'https://github.com/tc50cal/vim-terminal'
@@ -34,30 +35,42 @@ Plug 'junegunn/fzf.vim'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'https://github.com/digitaltoad/vim-pug.git'
 Plug 'catppuccin/nvim', { 'as': 'catppuccin' }
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'mg979/vim-visual-multi', {'branch': 'master'}
 call plug#end()
 
-colorscheme catppuccin
+colorscheme catppuccin-mocha
 
-nnoremap <C-f> :NERDTreeFocus<CR>
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
+lua << EOF
+-- disable netrw at the very start of your init.lua
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
+-- optionally enable 24-bit colour
+vim.opt.termguicolors = true
+
+-- empty setup using defaults
+require("nvim-tree").setup({
+	disable_netrw = true,
+	tab = {
+		sync = {
+			open = true,
+		}
+	}
+})
+EOF
+
 nnoremap <silent> <C-p> :GFiles<CR>
 nnoremap <silent> <Leader>/ :BLines<CR>
-nnoremap <C-.> :tabnext<CR>
-nnoremap <C-,> :tabprevious<CR>
+nnoremap <silent><Leader>. :tabnext<CR>
+nnoremap <silent><Leader>, :tabprevious<CR>
+nnoremap <C-f> :NvimTreeToggle<CR>
+nnoremap <C-o> :NvimTreeFindFile<CR>
 
-" Exit Vim if NERDTree is the only window remaining in the only tab.
-autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+" For GO development mapping
+nnoremap <silent> <Leader>T :GoTestFunc<CR>
+autocmd FileType go nmap <silent> <Leader>d <Plug>(go-def-tab)
 
-" Close the tab if NERDTree is the only window remaining in it.
-autocmd BufEnter * if winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-
-let g:NERDTreeDirArrowExpandable="+"
-let g:NERDTreeDirArrowCollapsible="~"
-let g:user_emmet_mode='a'
-let g:NERDTreeIgnore = ['^build$','^node_modules$', '^vendor$']
-let g:python3_host_prog = '/opt/homebrew/bin/python3'
-let g:python_host_prog = '/Users/suryaherdiyanto/.pyenv/shims/python'
 
 " Use tab for trigger completion with characters ahead and navigate
 " NOTE: There's always complete item selected by default, you may want to enable

@@ -87,6 +87,23 @@ vim.diagnostic.config({ virtual_text = true })
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+-- Set for CursorHold default is 4000ms
+vim.o.updatetime = 500
+
+vim.api.nvim_create_autocmd("CursorHold", {
+  callback = function()
+    vim.diagnostic.open_float(nil, {
+      focusable = false,
+      close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+      border = "rounded",
+      source = "always",
+      prefix = "",
+      scope = "cursor",
+    })
+  end
+})
+
+
 require("mason").setup()
 require("mason-lspconfig").setup({
 	ensure_installed = { "gopls", "templ", "pyright", "eslint", "html", "cssls", "intelephense", "vuels", "stimulus_ls" },

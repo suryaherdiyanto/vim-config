@@ -106,7 +106,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
 
 require("mason").setup()
 require("mason-lspconfig").setup({
-	ensure_installed = { "gopls", "templ", "pyright", "eslint", "html", "cssls", "intelephense", "vuels", "stimulus_ls" },
+	ensure_installed = { "gopls", "templ", "pyright", "eslint", "html", "cssls", "intelephense", "vuels", "stimulus_ls", "tailwindcss" },
 })
 
 local lspconfig = require("lspconfig")
@@ -119,6 +119,15 @@ lspconfig.gopls.setup {
 			usePlaceholders = true,
 		}
 	}
+}
+lspconfig.tailwindcss.setup {
+        capabilities = capabilities,
+        settings = {
+                tailwindCSS = {
+                        emmetCompletions = true,
+                        validate = true,
+                }
+        }
 }
 lspconfig.pyright.setup {}
 lspconfig.eslint.setup { capabilities = capabilities }

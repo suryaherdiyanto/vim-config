@@ -106,11 +106,14 @@ vim.api.nvim_create_autocmd("CursorHold", {
 
 require("mason").setup()
 require("mason-lspconfig").setup({
-	ensure_installed = { "gopls", "templ", "pyright", "eslint", "html", "cssls", "intelephense", "vuels", "stimulus_ls", "tailwindcss" },
+	ensure_installed = { "gopls", "templ", "pyright", "eslint", "html", "cssls", "intelephense", "stimulus_ls", "tailwindcss", "ts_ls", "vue-language-server" },
 })
 
 local lspconfig = require("lspconfig")
 local capabilities = require('cmp_nvim_lsp').default_capabilities()
+local mason_registry = require("mason-registry")
+local vue_language_server = mason_registry.get_package("vue-language-server"):get_install_path() .. "/node_modules/@vue/language-server"
+
 
 lspconfig.gopls.setup {
 	capabilities = capabilities,
@@ -136,7 +139,20 @@ lspconfig.cssls.setup {}
 lspconfig.intelephense.setup { capabilities = capabilities }
 lspconfig.vuels.setup { capabilities = capabilities }
 lspconfig.stimulus_ls.setup { capabilities = capabilities }
-lspconfig.templ.setup {}
+lspconfig.ts_ls.setup { 
+	capabilities = capabilities,
+	init_options = {
+		plugins = {
+			{
+				name = "@vue/typescript-plugin",
+				location = vue_language_server,
+				languages = { "vue" }
+			}
+		}
+	},
+	filetypes = { "typescript", "javascript", "vue" }
+}
+
 
 -- Set up nvim-cmp.
   local cmp = require'cmp'

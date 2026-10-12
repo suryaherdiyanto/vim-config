@@ -107,6 +107,7 @@ vim.api.nvim_create_autocmd("CursorHold", {
 require("mason").setup()
 require("mason-lspconfig").setup({
 	ensure_installed = { "gopls", "templ", "pyright", "eslint", "html", "cssls", "intelephense", "stimulus_ls", "tailwindcss", "ts_ls", "vue-language-server" },
+	automatic_enable = false,
 })
 
 local lspconfig = require("lspconfig")

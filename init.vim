@@ -115,6 +115,15 @@ local capabilities = require('cmp_nvim_lsp').default_capabilities()
 local mason_registry = require("mason-registry")
 local vue_language_server = mason_registry.get_package("vue-language-server"):get_install_path() .. "/node_modules/@vue/language-server"
 
+-- A robust root detector tailored for Laravel
+local laravel_root = function(fname)
+  return util.root_pattern('artisan', 'composer.json', 'package.json', '.git')(fname) 
+    or util.path.dirname(fname)
+end
+local stimulus_root = function(fname)
+    return util.root_pattern("package.json")(fname)
+end
+
 
 lspconfig.gopls.setup {
 	capabilities = capabilities,
@@ -137,9 +146,31 @@ lspconfig.pyright.setup {}
 lspconfig.eslint.setup { capabilities = capabilities }
 lspconfig.html.setup { capabilities = capabilities }
 lspconfig.cssls.setup {}
-lspconfig.intelephense.setup { capabilities = capabilities }
 lspconfig.vuels.setup { capabilities = capabilities }
-lspconfig.stimulus_ls.setup { capabilities = capabilities }
+lspconfig.stimulus_ls.setup { 
+	root_dir = stimulus_root,
+	capabilities = capabilities,
+	filetypes = { "html", "blade", "blade.php"}
+}
+lspconfig.intelephense.setup { 
+	capabilities = capabilities, 
+	root_dir = laravel_root,
+	filetypes = { "php", "blade.php"},
+	settings = {
+		intelephense = {
+			files = {
+				maxSize = 5000000; -- 5 MB
+				exclude = {
+                    "**/node_modules/**",
+                    "**/.git/**",
+                    "**/storage/**",
+                    "**/bootstrap/cache/**",
+                    "**/public/build/**",
+                },
+			}
+		}
+	}
+}
 lspconfig.ts_ls.setup { 
 	capabilities = capabilities,
 	init_options = {

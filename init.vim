@@ -184,6 +184,12 @@ lspconfig.ts_ls.setup {
 	filetypes = { "typescript", "javascript", "vue" }
 }
 
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, {
+    desc = "Go to definition (LSP)",
+    noremap = true,
+    silent = true,
+})
+
 
 -- Set up nvim-cmp.
   local cmp = require'cmp'
